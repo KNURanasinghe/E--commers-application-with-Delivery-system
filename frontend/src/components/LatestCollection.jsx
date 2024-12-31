@@ -20,7 +20,7 @@ const LatestCollection = () => {
             </p>            
         </div>
       
-      {/* products from title */}
+      {/* products from product items */}
       <div className='grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-y-6'>
         {
             latestProducts.map((item, index)=>(
