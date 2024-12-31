@@ -1,5 +1,5 @@
 import React from 'react'
-import HeroImg from '../assets/hero_img.png'
+import {assets} from '../assets/assets'
 
 const Hero = () => {
   return (
@@ -19,7 +19,7 @@ const Hero = () => {
         </div> 
       </div>
       {/* right side */}
-      <img className='w-full sm:w-1/2' src={HeroImg} alt="" />
+      <img className='w-full sm:w-1/2' src={assets.hero_img} alt="" />
     </div>
   )
 }
