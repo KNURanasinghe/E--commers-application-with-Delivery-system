@@ -1,6 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { ShopContext } from '../context/ShopContext'
+import React, { useContext, useEffect, useState } from 'react';
 import Title from '../components/Title';
+import { ShopContext } from '../context/ShopContext';
+import axios from 'axios'; 
+
 
 const Orders = () => {
   const {backendUrl,token, currency} = useContext(ShopContext);
@@ -8,22 +10,26 @@ const Orders = () => {
   const [orderData, setOrderData] = useState([])
   
   const loadOrderData = async () =>{
-    try {
+    try {      
       if (!token) {
         return null
       }
-      const response = await axios.post(backendUrl+ 'api/order/userorders',{},{headers:{token}})
+      
+      const response = await axios.post(backendUrl+ '/api/order/userorders',{},{headers:{token}})
+      console.log("order page rwsponse",response.data);
       
       if (response.data.success) {
         let allOrdersItem = [];
         response.data.orders.map((order)=>{
           order.items.map((item)=>{
             item['status'] = order.status
+            item['payment'] = order.payment
             item['paymentMethod'] = order.paymentMethod
             item['date'] = order.date
             allOrdersItem.push(item)
           })
         })
+        
         setOrderData(allOrdersItem.reverse())
       }
     } catch (error) {
@@ -34,6 +40,8 @@ const Orders = () => {
   useEffect(()=>{
      loadOrderData();
   },[token])
+
+  
   return (
     <div className='pt-16 border-t'>
       <div className='text-2xl'>
@@ -50,7 +58,7 @@ const Orders = () => {
                   <div className='flex items-center gap-3 mt-1 text-base text-gray-700'>
                     <p >{currency}{item.price}</p>
                     <p>Quantity: {item.quantity}</p>
-                    <p>Size: {iem.size}</p>
+                    <p>Size: {item.size}</p>
                   </div>
                   <p className='mt-1'>Date : <span className='text-gray-400'>{new Date(item.date).toDateString  }</span></p>
                   <p className='mt-1'>Payment : <span className='text-gray-400'>{item.paymentMethod }</span></p>

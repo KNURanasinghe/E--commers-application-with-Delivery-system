@@ -1,7 +1,8 @@
-import { createContext, useEffect, useState } from "react";
-import { toast } from "react-toastify";
-import {useFetcher, useNavigate} from 'react-router-dom';
 import axios from 'axios';
+import { createContext, useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom';
+import { toast } from "react-toastify";
+
 
 export const ShopContext = createContext();
 
@@ -116,18 +117,20 @@ const ShopContextProvider = (props) => {
         }
     }
 
-    const getUSerCart =async (token) => {
+        const getUSerCart =async (token) => {
+           
 
-        try {
-            const response = await axios.post(backendUrl +  '/api/cart/get',{},{headers:{token}});
-            if (response.data.success) {
-                setCartItems(response.data.cartData)
+            try {
+                const response = await axios.post('http://localhost:4000/api/cart/get',{},{headers:{token}});
+                
+                if (response.data.success) {
+                    setCartItems(response.data.cartData)
+                }
+            } catch (error) {
+                console.log(error);
+                toast.error(error.message)
             }
-        } catch (error) {
-            console.log(error);
-            toast.error(error.message)
         }
-    }
 
     useEffect(()=>{
         getProductData();

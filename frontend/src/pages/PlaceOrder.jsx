@@ -1,9 +1,10 @@
+import axios from 'axios'
 import React, { useContext, useState } from 'react'
-import Title from '../components/Title'
-import CartTotal from '../components/CartTotal'
-import { assets } from '../assets/assets'
-import { ShopContext } from '../context/ShopContext'
 import { toast } from 'react-toastify'
+import { assets } from '../assets/assets'
+import CartTotal from '../components/CartTotal'
+import Title from '../components/Title'
+import { ShopContext } from '../context/ShopContext'
 
 const PlaceOrder = () => {
   const [method, setMethod] = useState('cod');
@@ -45,10 +46,12 @@ const PlaceOrder = () => {
           }
         }
       }
+      console.log(orderItems);
+      
       let orderData = {
         address: formData,
         items: orderItems,
-        amount: getCartAmount + delivery_fee
+        amount: getCartAmount() + delivery_fee
       }
       
       switch (method) {
@@ -81,20 +84,20 @@ const PlaceOrder = () => {
         <Title text1={'DELIVERY'} text2={'INFORMATION'}/>
         </div>
         <div className='flex gap-3'>
-        <input type="text" placeholder='First name' onChange={onchange} name='firstName' value={formData.firstName} className='border border-gray-300 rounded py-1.5 px-3.5 w-full' />
-        <input onChange={onchange} name='lastName' value={formData.lastName} type="text" placeholder='Last name' className='border border-gray-300 rounded py-1.5 px-3.5 w-full' />
+        <input type="text" placeholder='First name' onChange={onChangeHandler} name='firstName' value={formData.firstName} className='border border-gray-300 rounded py-1.5 px-3.5 w-full' />
+        <input onChange={onChangeHandler} name='lastName' value={formData.lastName} type="text" placeholder='Last name' className='border border-gray-300 rounded py-1.5 px-3.5 w-full' />
       </div>
-      <input onChange={onchange} name='email' value={formData.email} type="email" placeholder='E-mail address' className='border border-gray-300 rounded py-1.5 px-3.5 w-full' />
-      <input onChange={onchange} name='street' value={formData.street} type="text" placeholder='Streat' className='border border-gray-300 rounded py-1.5 px-3.5 w-full' />
+      <input onChange={onChangeHandler} name='email' value={formData.email} type="email" placeholder='E-mail address' className='border border-gray-300 rounded py-1.5 px-3.5 w-full' />
+      <input onChange={onChangeHandler} name='street' value={formData.street} type="text" placeholder='Streat' className='border border-gray-300 rounded py-1.5 px-3.5 w-full' />
       <div className='flex gap-3'>
-        <input onChange={onchange} name='city' value={formData.city} type="text" placeholder='City' className='border border-gray-300 rounded py-1.5 px-3.5 w-full' />
-        <input type="text" onChange={onchange} name='state' value={formData.state} placeholder='State' className='border border-gray-300 rounded py-1.5 px-3.5 w-full' />
+        <input onChange={onChangeHandler} name='city' value={formData.city} type="text" placeholder='City' className='border border-gray-300 rounded py-1.5 px-3.5 w-full' />
+        <input type="text" onChange={onChangeHandler} name='state' value={formData.state} placeholder='State' className='border border-gray-300 rounded py-1.5 px-3.5 w-full' />
       </div>
       <div className='flex gap-3'>
-        <input onChange={onchange} name='zipcode' value={formData.zipcode} type="number" placeholder='Zip code' className='border border-gray-300 rounded py-1.5 px-3.5 w-full' />
-        <input onChange={onchange} name='country' value={formData.country} type="text" placeholder='Country' className='border border-gray-300 rounded py-1.5 px-3.5 w-full' />
+        <input onChange={onChangeHandler} name='zipcode' value={formData.zipcode} type="number" placeholder='Zip code' className='border border-gray-300 rounded py-1.5 px-3.5 w-full' />
+        <input onChange={onChangeHandler} name='country' value={formData.country} type="text" placeholder='Country' className='border border-gray-300 rounded py-1.5 px-3.5 w-full' />
       </div>
-      <input onChange={onchange} name='phone' value={formData.phone} type="number" placeholder='Phone ' className='border border-gray-300 rounded py-1.5 px-3.5 w-full' />
+      <input onChange={onChangeHandler} name='phone' value={formData.phone} type="number" placeholder='Phone ' className='border border-gray-300 rounded py-1.5 px-3.5 w-full' />
       </div>
       {/* right side item */}
       <div className='mt-8'>
